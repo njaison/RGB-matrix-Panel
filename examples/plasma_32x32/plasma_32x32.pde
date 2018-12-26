@@ -22,7 +22,7 @@
 //#define B   A2
 //#define C   A1
 //#define D   A0
-RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false);
+RGBmatrixPanel32x32 matrix(A, B, C, D, CLK, LAT, OE, false);
 
 static int8_t sinetab[256] PROGMEM = {
      0,   2,   5,   8,  11,  15,  18,  21,

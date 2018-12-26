@@ -119,7 +119,7 @@ void RGBmatrixPanel::init(uint8_t rows, uint8_t a, uint8_t b, uint8_t c,
   addrbport = portOutputRegister(digitalPinToPort(b));
   addrbpin  = digitalPinToBitMask(b);
   addrcport = portOutputRegister(digitalPinToPort(c));
-  addrcpin  = digitalPinToBitMask(c); 
+  addrcpin  = digitalPinToBitMask(c);
   nPlanes   = 4;     // Other code is fixed at 4 planes; don't change this
   plane     = nPlanes - 1;
   row       = nRows   - 1;
@@ -137,7 +137,7 @@ RGBmatrixPanel::RGBmatrixPanel(
 }
 
 // Constructor for 32x32 panel:
-RGBmatrixPanel::RGBmatrixPanel(
+RGBmatrixPanel::RGBmatrixPanel32x32(
   uint8_t a, uint8_t b, uint8_t c, uint8_t d,
   uint8_t sclk, uint8_t latch, uint8_t oe, boolean dbuf, uint8_t pwidth) :
   Adafruit_GFX(32*pwidth, 32) {
@@ -145,6 +145,23 @@ RGBmatrixPanel::RGBmatrixPanel(
   init(16, a, b, c, sclk, latch, oe, dbuf, pwidth);
 
   // Init a few extra 32x32-specific elements:
+  _d        = d;
+  addrdport = portOutputRegister(digitalPinToPort(d));
+  addrdpin  = digitalPinToBitMask(d);
+}
+
+
+// Constructor for 32x64 panel:
+RGBmatrixPanel::RGBmatrixPanel32x64(
+  uint8_t a, uint8_t b, uint8_t c, uint8_t d,
+  uint8_t sclk, uint8_t latch, uint8_t oe, boolean dbuf, uint8_t pwidth) :
+  Adafruit_GFX(64*pwidth, 32) {
+
+  pwidth *=2;
+
+  init(16, a, b, c, sclk, latch, oe, dbuf, pwidth);
+
+  // Init a few extra 32x64-specific elements:
   _d        = d;
   addrdport = portOutputRegister(digitalPinToPort(d));
   addrdpin  = digitalPinToBitMask(d);
@@ -275,7 +292,10 @@ void RGBmatrixPanel::drawPixel(int16_t x, int16_t y, uint16_t c) {
 
   switch(rotation) {
    case 1:
-    swap(x, y);
+    int temp = x;
+           x = y;
+           y = temp;
+
     x = WIDTH  - 1 - x;
     break;
    case 2:
@@ -283,7 +303,10 @@ void RGBmatrixPanel::drawPixel(int16_t x, int16_t y, uint16_t c) {
     y = HEIGHT - 1 - y;
     break;
    case 3:
-    swap(x, y);
+    int temp = x;
+           x = y;
+           y = temp;
+
     y = HEIGHT - 1 - y;
     break;
   }
@@ -340,6 +363,7 @@ void RGBmatrixPanel::drawPixel(int16_t x, int16_t y, uint16_t c) {
     }
   }
 }
+
 
 void RGBmatrixPanel::fillScreen(uint16_t c) {
   if((c == 0x0000) || (c == 0xffff)) {
