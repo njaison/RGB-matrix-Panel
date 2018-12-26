@@ -292,7 +292,10 @@ void RGBmatrixPanel::drawPixel(int16_t x, int16_t y, uint16_t c) {
 
   switch(rotation) {
    case 1:
- //   swap(x, y);
+    int temp = x;
+           x = y;
+           y = temp;
+
     x = WIDTH  - 1 - x;
     break;
    case 2:
@@ -300,7 +303,10 @@ void RGBmatrixPanel::drawPixel(int16_t x, int16_t y, uint16_t c) {
     y = HEIGHT - 1 - y;
     break;
    case 3:
- //   swap(x, y);
+    int temp = x;
+           x = y;
+           y = temp;
+
     y = HEIGHT - 1 - y;
     break;
   }
@@ -357,6 +363,7 @@ void RGBmatrixPanel::drawPixel(int16_t x, int16_t y, uint16_t c) {
     }
   }
 }
+
 
 void RGBmatrixPanel::fillScreen(uint16_t c) {
   if((c == 0x0000) || (c == 0xffff)) {
