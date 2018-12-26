@@ -137,7 +137,7 @@ RGBmatrixPanel::RGBmatrixPanel(
 }
 
 // Constructor for 32x32 panel:
-RGBmatrixPanel::RGBmatrixPanel(
+RGBmatrixPanel::RGBmatrixPanel32x32(
   uint8_t a, uint8_t b, uint8_t c, uint8_t d,
   uint8_t sclk, uint8_t latch, uint8_t oe, boolean dbuf, uint8_t pwidth) :
   Adafruit_GFX(32*pwidth, 32) {
@@ -152,7 +152,7 @@ RGBmatrixPanel::RGBmatrixPanel(
 
 
 // Constructor for 32x64 panel:
-RGBmatrixPanel::RGBmatrixPanel(
+RGBmatrixPanel::RGBmatrixPanel32x64(
   uint8_t a, uint8_t b, uint8_t c, uint8_t d,
   uint8_t sclk, uint8_t latch, uint8_t oe, boolean dbuf, uint8_t pwidth) :
   Adafruit_GFX(64*pwidth, 32) {
